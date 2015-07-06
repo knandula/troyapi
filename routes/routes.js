@@ -3,6 +3,7 @@
  */
 var express = require('express');
 //var user = require('../models/userModel');
+var myLayer = require('../models/layerModel');
 module.exports= function (app) {
     app.get('/',function(req,res){
         res.send('My Api');
@@ -44,5 +45,23 @@ module.exports= function (app) {
     //    });
     //
     //app.use('/api',router);
+
+
+    var LayerRouter = express.Router();
+    LayerRouter.route('/maplayers')
+        .get(function(req,res){
+            myLayer.find(function(err,docs){
+               if (err)
+                   res.status(500).send(err);
+               else
+                   res.json(docs);
+            });
+        })
+        .post(function(req,res){
+            var layer = new myLayer(req.body);
+            layer.save();
+            console.log(layer);
+        });
+    app.use('/api',LayerRouter);
 
 };

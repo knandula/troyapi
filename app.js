@@ -2,7 +2,9 @@
  * Created by rachanti on 6/20/2015.
  */
 var express = require('express');
+var cors = require('cors');
 var app = express();
+app.use(cors());
 var Database = require('./settings').mongo;
 var bodyparser = require('body-parser');
 
